@@ -1,10 +1,27 @@
 import  { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import heroImage from './assets/heroimage.jpg';
 
 
 // Styled components
+
+
+const SignInLink = styled.p`
+  text-align: center;
+  margin-top: 2rem;
+  color: #666;
+  
+  a {
+    color: #4285f4;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
 const Container = styled.div`
   display: flex;
   min-height: 100vh;
@@ -125,7 +142,7 @@ const SignUp = () => {
   const handleInitialSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/register', {
+      await axios.post('https://signupbackendproject.onrender.com/register', {
         username: formData.name,
         email: formData.email,
         dateOfBirth: formData.dateOfBirth
@@ -140,7 +157,7 @@ const SignUp = () => {
   const handleOTPSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/registration/verify', {
+      const response = await axios.post('https://signupbackendproject.onrender.com/registration/verify', {
         username: formData.name,
         email: formData.email,
         dateOfBirth: formData.dateOfBirth,
@@ -223,6 +240,9 @@ const SignUp = () => {
         <GoogleButton>
           Continue with Google
         </GoogleButton>
+        <SignInLink>
+          Already have an account? <Link to="/">SignIn</Link>
+        </SignInLink>
       </FormCard>
       <ImageContainer />
     </Container>

@@ -21,7 +21,7 @@ function App() {
       }
       
       try {
-        const response = await axios.get('http://localhost:5000/protected', {
+        const response = await axios.get('https://signupbackendproject.onrender.com/protected', {
           headers: {
             'Authorization': 'Bearer ' + token // Use token directly
           }
@@ -40,7 +40,7 @@ function App() {
     };
 
     validateToken();
-  }, []); // Removed token from dependency array
+  }, []); 
 
   if (loading) {
     return <div>Loading...</div>; // Render loading indicator

@@ -2,12 +2,13 @@ import  { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import heroImage from './assets/heroimage.jpg';
 
 const SignIn = () => {
  
   const [formData, setFormData] = useState({
     email: '',
-    
+    otp:''
   });
   const [step, setStep] = useState(1);
   const [error, setError] = useState('');
@@ -21,11 +22,12 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/login', {
+      await axios.post('https://signupbackendproject.onrender.com/login', {
         
         email: formData.email,
         
       });
+    
       setLoading(true)
       setStep(2);
       setError('');
@@ -36,7 +38,7 @@ const SignIn = () => {
   const handleOTPSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/login/verify', {
+      const response = await axios.post('https://signupbackendproject.onrender.com/login/verify', {
         username: formData.name,
         email: formData.email,
         dateOfBirth: formData.dateOfBirth,
@@ -114,14 +116,14 @@ const SignIn = () => {
 const Container = styled.div`
   display: flex;
   min-height: 100vh;
-  
+  gap:200px;
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
 const FormCard = styled.div`
-  flex: 1;
+  flex: .5;
   padding: 2rem;
   max-width: 500px;
   margin: auto;
@@ -129,9 +131,9 @@ const FormCard = styled.div`
 
 const ImageContainer = styled.div`
   flex: 1;
-  background: url('/path-to-your-blue-wave-image.jpg') no-repeat center;
+  background: url(${heroImage}) no-repeat center;
   background-size: cover;
-  
+  width: 700px;
   @media (max-width: 768px) {
     display: none;
   }
