@@ -11,6 +11,7 @@ function App() {
   // State to manage authentication status
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [loading, setLoading] = useState(true); // State to manage loading status
+  const [userData, setUserData]=useState({})
   useEffect(() => {
     const fetchProtectedData = async () => { // Define an async function
       const email = JSON.parse(localStorage.getItem('token')).user.email; 
@@ -18,6 +19,7 @@ function App() {
       try {
         const response = await axios.get(`${import.meta.env.VITE_SERVERAPI}/protected/user?email=${encodeURIComponent(email)}`); // Corrected encodeURIComponent
         console.log('Protected data:', response.data); // Log the response data
+        setUserData(response.data.data)
       } catch (error) {
         console.error('Error fetching protected data:', error); // Log any errors
       }
@@ -90,9 +92,9 @@ function App() {
     <>
       <div>Hi, Welcome to the page</div> {/* Welcome message */}
       <div>
-        <h1></h1>
-        <p></p>
-        <p></p>
+        <h1>{userData.username}</h1>
+        <p>{userData.dateOfBirth}</p>
+        <p>{userData.email}</p>
       </div>
       <button onClick={handleLogOut}>Log Out</button> {/* Button to log out */}
     </>
