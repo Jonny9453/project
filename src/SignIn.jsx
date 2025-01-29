@@ -31,7 +31,7 @@ const SignIn = () => {
 
     try {
       // Send a POST request to log in the user
-      await axios.post('https://signupbackendproject.onrender.com/login', {
+      await axios.post(`${import.meta.env.VITE_SERVERAPI}/login`, {
         email: formData.email, // Send the user's email
       });
     
@@ -48,14 +48,14 @@ const SignIn = () => {
     e.preventDefault(); // Prevent default form submission behavior
     try {
       // Send a POST request to verify the OTP
-      const response = await axios.post('https://signupbackendproject.onrender.com/login/verify', {
+      const response = await axios.post(`${import.meta.env.VITE_SERVERAPI}/login/verify`, {
         username: formData.name, // Send the user's name (this should be defined in formData)
         email: formData.email, // Send the user's email
         dateOfBirth: formData.dateOfBirth, // Send the user's date of birth (this should be defined in formData)
         otp: formData.otp // Send the OTP for verification
       });
       // Store the received token in local storage
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', JSON.stringify(response.data)); 
       window.location.reload(); // Reload the page to reflect changes
       // Redirect or update UI accordingly
     } catch (err) {

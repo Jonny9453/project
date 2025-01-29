@@ -11,11 +11,25 @@ function App() {
   // State to manage authentication status
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [loading, setLoading] = useState(true); // State to manage loading status
-  
+  useEffect(() => {
+    const fetchProtectedData = async () => { // Define an async function
+      const email = JSON.parse(localStorage.getItem('token')).user.email; 
+      
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_SERVERAPI}/protected/user?email=${encodeURIComponent(email)}`); // Corrected encodeURIComponent
+        console.log('Protected data:', response.data); // Log the response data
+      } catch (error) {
+        console.error('Error fetching protected data:', error); // Log any errors
+      }
+    };
+
+    fetchProtectedData(); // Call the async function
+  }, []); // Empty dependency array means this runs once on mount
+
   // Effect to validate the token on component mount
   useEffect(() => {
     const validateToken = async () => {
-      const token = localStorage.getItem('token'); // Retrieve token from local storage
+      const token = JSON.parse(localStorage.getItem('token')); // Retrieve and parse the token object
       
       if (!token) {
         setIsAuthenticated(false); // If no token, set authenticated state to false
@@ -25,9 +39,9 @@ function App() {
       
       try {
         // Send a GET request to validate the token
-        const response = await axios.get('https://signupbackendproject.onrender.com/protected', {
+        const response = await axios.get(`${import.meta.env.VITE_SERVERAPI}/protected`, {
           headers: {
-            'Authorization': 'Bearer ' + token // Include token in the Authorization header
+            'Authorization': 'Bearer ' + token.token // Include token in the Authorization header
           }
         });
         
@@ -46,11 +60,11 @@ function App() {
     validateToken(); // Call the token validation function
   }, []); // Empty dependency array means this runs once on mount
 
-  // Render loading indicator while validating token
+  // Render loading indicator whil://signupbackendproject.onrender.come validating token
   if (loading) {
     return <div>Loading...</div>; // Display loading message
   }
-
+  
   // If not authenticated, show sign-in and sign-up routes
   if (!isAuthenticated) {
     return ( 
@@ -63,6 +77,7 @@ function App() {
       </Router>
     );
   }
+ 
 
   // Function to handle user logout
   const handleLogOut = () => {
@@ -74,6 +89,11 @@ function App() {
   return (
     <>
       <div>Hi, Welcome to the page</div> {/* Welcome message */}
+      <div>
+        <h1></h1>
+        <p></p>
+        <p></p>
+      </div>
       <button onClick={handleLogOut}>Log Out</button> {/* Button to log out */}
     </>
   );

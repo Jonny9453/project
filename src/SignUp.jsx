@@ -166,7 +166,7 @@ const SignUp = () => {
     setLoading(true); // Set loading state to true while submitting
     try {
       // Send a POST request to register the user
-      await axios.post('https://signupbackendproject.onrender.com/register', {
+      await axios.post(`${import.meta.env.VITE_SERVERAPI}/register`, {
         username: formData.name, // Send the user's name
         email: formData.email, // Send the user's email
         dateOfBirth: formData.dateOfBirth // Send the user's date of birth
@@ -184,7 +184,7 @@ const SignUp = () => {
     e.preventDefault(); // Prevent default form submission behavior
     try {
       // Send a POST request to verify the OTP
-      const response = await axios.post('https://signupbackendproject.onrender.com/registration/verify', {
+      const response = await axios.post(`${import.meta.env.VITE_SERVERAPI}/registration/verify`, {
         username: formData.name, // Send the user's name
         email: formData.email, // Send the user's email
         dateOfBirth: formData.dateOfBirth, // Send the user's date of birth
