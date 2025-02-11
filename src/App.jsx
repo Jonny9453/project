@@ -375,8 +375,8 @@ function App() {
       const email = JSON.parse(localStorage.getItem('token')).user.email; 
       
       try {
-         await axios.post(`${import.meta.env.VITE_SERVERAPI}/protected/addNotes?email=${encodeURIComponent(email)}`,formData); // Corrected encodeURIComponent
-        // window.location.reload()
+         await axios.post(`${import.meta.env.VITE_SERVERAPI}/protected/addEvent?email=${encodeURIComponent(email)}`,formData); // Corrected encodeURIComponent
+        window.location.reload()
         
       } catch (error) {
         console.error('Error sending data:', error); // Log any errors
@@ -393,7 +393,7 @@ function App() {
       const email = JSON.parse(localStorage.getItem('token')).user.email; 
       
       try {
-         await axios.post(`${import.meta.env.VITE_SERVERAPI}/protected/deleteNotes`,{
+         await axios.post(`${import.meta.env.VITE_SERVERAPI}/protected/deleteEvent`,{
           email: email,
           index: index 
          }); // Corrected encodeURIComponent
