@@ -268,7 +268,7 @@ const styles = {
     fontSize: '15px'
   }
 };
-const socket = socketIO.connect('http://localhost:5000');
+const socket = socketIO.connect('https://signupbackendproject.onrender.com');
 
 // Main App component
 function App() {
