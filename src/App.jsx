@@ -280,6 +280,8 @@ function App() {
     title: '',
     description:'',
     date:'',
+    location:'',
+    category:'',
   });
 
   useEffect(() => {
@@ -444,6 +446,12 @@ function App() {
                 <div className="text-contrast">
                   <p>{event.description}</p>
                 </div>
+                <div className="text-contrast">
+                  <p>{event.location}</p>
+                </div>
+                <div className="text-contrast">
+                  <p>{event.category}</p>
+                </div>
                 <p>Attendees: {event.attendees.length}</p>
                 <p style={styles.eventDate}>
                   Date: {new Date(event.date).toLocaleDateString()}
@@ -494,6 +502,22 @@ function App() {
             type="date"
             name="date"
             value={formData.date}
+            onChange={handleChange}
+          />
+          <input
+            style={styles.input}
+            placeholder='location'
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+          />
+          <input
+            style={styles.input}
+            placeholder='category'
+            type="text"
+            name="category"
+            value={formData.category}
             onChange={handleChange}
           />
           <button type="submit" className="simple-button">Add Event</button>
