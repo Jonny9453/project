@@ -112,6 +112,7 @@ html {
 
 .section {
   animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+   
 }
 
 /* Add responsive container padding */

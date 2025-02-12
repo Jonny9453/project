@@ -137,7 +137,7 @@ const SignIn = () => {
           Continue with Google {/* Button for Google sign-in */}
         </GoogleButton>
 
-        <GuestButton onClick={handleGuestLogin} disabled>
+        <GuestButton onClick={handleGuestLogin} >
           Continue as Guest
         </GuestButton>
         

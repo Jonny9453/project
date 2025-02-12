@@ -61,7 +61,8 @@ const styles = {
     '@media (max-width: 600px)': {
       gridTemplateColumns: '1fr',
       gap: '20px'
-    }
+    },
+   
   },
   eventCard: {
     background: 'rgba(30, 41, 59, 0.7)',
@@ -359,7 +360,7 @@ function App() {
   }
   const token = JSON.parse(localStorage.getItem('token'));
   // If not authenticated, show sign-in and sign-up routes
-  if (!isAuthenticated || token?.type=="guest") {
+  if (!(token?.type=="guest")&&!isAuthenticated  ) {
     return ( 
       <Router>
         <Routes>
