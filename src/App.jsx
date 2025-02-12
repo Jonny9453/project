@@ -3,6 +3,7 @@ import SignUp from './SignUp'; // Import SignUp component
 import SignIn from './SignIn'; // Import SignIn component
 import { useEffect, useState } from 'react'; // Import hooks from React
 import axios from 'axios'; // Import axios for making HTTP requests
+import socketIO from 'socket.io-client';
 
 import './App.css'; // Import CSS styles for the application
 
@@ -266,6 +267,7 @@ const styles = {
     fontSize: '15px'
   }
 };
+const socket = socketIO.connect('http://localhost:5000');
 
 // Main App component
 function App() {
@@ -279,6 +281,10 @@ function App() {
     description:'',
     date:'',
   });
+
+  useEffect(() => {
+    socket.on('jointResponse', (data) => setEventsData(data));
+  }, [socket]);
 
   useEffect(()=>{
     const fetchEvents=async()=>{
@@ -409,6 +415,18 @@ function App() {
     return token?.type === 'guest';
   };
 
+  const handleJoinEvent=(e,id)=>{
+    e.preventDefault();
+    socket.emit('add', {
+      text: "Join Event",
+      name:userData.userName,
+      id: id,
+      email:userData.email,
+      socketID: socket.id,
+    });
+  }
+ 
+
   // Render the main application content for authenticated users
   return (
     <div style={styles.container} className="cyber-lines">
@@ -426,10 +444,11 @@ function App() {
                 <div className="text-contrast">
                   <p>{event.description}</p>
                 </div>
+                <p>Attendees: {event.attendees.length}</p>
                 <p style={styles.eventDate}>
                   Date: {new Date(event.date).toLocaleDateString()}
                 </p>
-                <button className="join-button cyber-button">Join Event</button>
+                <button className="join-button cyber-button" onClick={(e)=>handleJoinEvent(e,event._id)}>Join Event</button>
               </div>
             ))
           ) : (
